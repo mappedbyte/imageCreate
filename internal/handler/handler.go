@@ -13,12 +13,14 @@ func SubmitHandler(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
 			"id":      "",
+			"code":    "500",
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "请求已提交",
 		"id":      id,
+		"code":    200,
 	})
 }
 
@@ -28,6 +30,7 @@ func ResultHandler(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "id不可以为空,操作失败",
 			"data":    make([]string, 0),
+			"code":    500,
 		})
 		return
 	}
@@ -36,11 +39,13 @@ func ResultHandler(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
 			"data":    make([]string, 0),
+			"code":    500,
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "操作成功",
 		"data":    result,
+		"code":    200,
 	})
 }

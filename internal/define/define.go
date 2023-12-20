@@ -3,6 +3,7 @@ package define
 import (
 	"encoding/json"
 	"errors"
+	"image-Designer/internal/task"
 	"io/ioutil"
 	"os"
 )
@@ -20,6 +21,7 @@ func init() {
 		marshal, _ := json.Marshal(conf)
 		ioutil.WriteFile(dir+string(os.PathSeparator)+ConfigName, marshal, 0666)
 	}
+	task.ClearIdCache()
 }
 
 type Config struct {

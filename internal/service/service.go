@@ -139,6 +139,19 @@ func Result(id string) ([]string, error) {
 		srcArrays = append(srcArrays, srcValue)
 	}
 
-	delete(config.Cache, id)
+	if len(srcArrays) == 0 {
+		nodes, err = htmlquery.QueryAll(doc, "//*[@id='gir_async']/a/img/@src")
+		for _, node := range nodes {
+			// 获取节点的值（src 属性的值）
+			srcValue := htmlquery.InnerText(node)
+			srcValue = strings.ReplaceAll(srcValue, "w=270&h=270&c=6&r=0&o=5&dpr=1.5", "")
+			srcArrays = append(srcArrays, srcValue)
+		}
+	}
+
+	if len(srcArrays) == 0 {
+		return nil, errors.New("包含敏感词汇,已阻止生成")
+	}
+	//delete(config.Cache, id)
 	return srcArrays, nil
 }
